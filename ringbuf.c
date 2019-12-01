@@ -1,5 +1,6 @@
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 struct ringbuf
@@ -55,4 +56,24 @@ uint8_t *next_head(struct ringbuf *buf, size_t offset)
 uint8_t *next_tail(struct ringbuf *buf, size_t offset)
 {
     return buf->base + ((buf->tail - buf->base) + offset) % buf->cap;
+}
+
+struct ringbuf new_ring_buffer(size_t cap)
+{
+    if (cap < 1)
+    {
+        fprintf(stderr, "ringbuf capacity must be > 0\n");
+        exit(EXIT_FAILURE);
+    }
+    struct ringbuf buf;
+    buf.base = malloc(cap);
+    if (buf.base == NULL)
+    {
+        fprintf(stderr, "can't allocate %zu memory for ringbuf\n", cap);
+        exit(EXIT_FAILURE);
+    }
+    buf.head = buf.base;
+    buf.tail = buf.base;
+    buf.cap = cap;
+    return buf;
 }
