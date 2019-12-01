@@ -32,6 +32,11 @@ size_t nfree(struct ringbuf *buf)
     return buf->cap - nfilled(buf);
 }
 
+size_t get_cap(struct ringbuf *buf)
+{
+    return buf->cap;
+}
+
 size_t headtoend(struct ringbuf *buf)
 {
     return buf->cap - (buf->head - buf->base);
