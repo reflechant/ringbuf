@@ -12,7 +12,7 @@ struct ringbuf
     uint8_t *tail;
 };
 
-// Alternative realization of memcpy using SIMD instructions. Looks like 256-bit version is the fastest even if AVX-512 is available.
+// Alternative realization of memcpy using SIMD instructions. Looks like 256-bit version is the fastest on Intel Xeon Silver CPUs even having AVX-512 is available.
 // It's a naive realization which works best for small chunks (up to ~1500 byte - maximum size of standard IEEE 802.3 frame payload). For bigger chunks search for `apex_kryptonite` which uses prefetch and other tricks
 void *intrin_memcpy_512(void *restrict dst, const void *restrict src, size_t size)
 {
