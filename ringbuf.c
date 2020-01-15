@@ -118,7 +118,7 @@ struct ringbuf new_ring_buffer(size_t cap)
 {
     if (cap < 1)
     {
-        fprintf(stderr, "ringbuf capacity must be > 0\n");
+        fprintf(stderr, "ringbuf capacity must be nonzero\n");
         exit(EXIT_FAILURE);
     }
     struct ringbuf buf;
