@@ -27,8 +27,8 @@ struct frb_ringbuf {
 
 FRB_DEF struct frb_ringbuf frb_new_ringbuf(size_t cap, void *buf);
 
-FRB_DEF size_t nfree(struct frb_ringbuf *buf);
-FRB_DEF bool is_empty(struct frb_ringbuf *buf);
+FRB_DEF size_t frb_nfree(struct frb_ringbuf *buf);
+FRB_DEF bool frb_is_empty(struct frb_ringbuf *buf);
 
 FRB_DEF void *simd_memcpy_128(void *restrict dst, const void *restrict src,
                               size_t size);
@@ -109,7 +109,7 @@ void *simd_memcpy_512(void *restrict dst, const void *restrict src,
   return dst;
 }
 
-bool is_empty(struct frb_ringbuf *buf) { return buf->_tail == buf->_head; }
+bool frb_is_empty(struct frb_ringbuf *buf) { return buf->_tail == buf->_head; }
 
 size_t nfilled(struct frb_ringbuf *buf) {
   if (buf->_head >= buf->_tail) {
@@ -119,7 +119,7 @@ size_t nfilled(struct frb_ringbuf *buf) {
   }
 }
 
-size_t nfree(struct frb_ringbuf *buf) { return buf->cap - nfilled(buf); }
+size_t frb_nfree(struct frb_ringbuf *buf) { return buf->cap - nfilled(buf); }
 
 /* size_t headtoend(struct frb_ringbuf *buf) { */
 /*   return buf->cap - (buf->_head - buf->_base); */
